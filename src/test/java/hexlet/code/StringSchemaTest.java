@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import hexlet.code.schemas.StringSchema;
 
-class AppTest {
+class StringSchemaTest {
     private final int minLenthCheck = 3;
 
     @Test
@@ -14,11 +14,11 @@ class AppTest {
 
         boolean actual1 = schema.isValid("");
         boolean expected1 = true;
-        Assertions.assertEquals(actual1, expected1);
+        Assertions.assertEquals(expected1, actual1);
 
         boolean actual2 = schema.isValid(null);
         boolean expected2 = true;
-        Assertions.assertEquals(actual2, expected2);
+        Assertions.assertEquals(expected2, actual2);
     }
 
     @Test
@@ -30,7 +30,7 @@ class AppTest {
 
         boolean actual1 = schema.isValid("what does the fox say");
         boolean expected1 = true;
-        Assertions.assertEquals(actual1, expected1);
+        Assertions.assertEquals(expected1, actual1);
     }
 
     @Test
@@ -40,12 +40,12 @@ class AppTest {
 
         boolean actual1 = schema.contains("what").isValid("what does the fox say");
         boolean expected1 = true;
-        Assertions.assertEquals(actual1, expected1);
+        Assertions.assertEquals(expected1, actual1);
 
         schema.contains("does");
         boolean actual2 = schema.isValid("what does the fox say");
         boolean expected2 = true;
-        Assertions.assertEquals(actual2, expected2);
+        Assertions.assertEquals(expected2, actual2);
     }
 
     @Test
@@ -55,9 +55,8 @@ class AppTest {
 
         boolean actual1 = schema.minLength(minLenthCheck).isValid("abc");
         boolean expected1 = true;
-        Assertions.assertEquals(actual1, expected1);
+        Assertions.assertEquals(expected1, actual1);
     }
-
 
     @Test
     void testAll() {
@@ -70,6 +69,6 @@ class AppTest {
 
         boolean actual2 = schema.isValid(null); // false
         boolean expected2 = false;
-        Assertions.assertEquals(actual2, expected2);
+        Assertions.assertEquals(expected2, actual2);
     }
 }
