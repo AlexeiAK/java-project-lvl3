@@ -12,16 +12,24 @@ public class BaseSchema {
     }
 
     public final boolean isValid(Object testedObject) {
-        Predicate<Object> resultPredicate = null;
+        Predicate<Object> finalPredicate = null;
+
+        boolean result = true;
 
         if (appliedMethods.size() == 0) {
-            resultPredicate = o -> o == null || o.equals("");
+            finalPredicate = o -> o == null || o.equals("");
         } else {
             for (Predicate predicate : appliedMethods) {
-                resultPredicate = predicate;
+                finalPredicate = predicate;
+                boolean resultOfPredicate = finalPredicate.test(testedObject);
+
+                if (!resultOfPredicate) {
+                    result = false;
+                    break;
+                }
             }
         }
 
-        return resultPredicate.test(testedObject);
+        return result;
     }
 }
