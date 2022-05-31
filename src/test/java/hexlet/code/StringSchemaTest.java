@@ -43,6 +43,7 @@ class StringSchemaTest {
         Assertions.assertEquals(expected1, actual1);
 
         schema.contains("does");
+
         boolean actual2 = schema.isValid("what does the fox say");
         boolean expected2 = true;
         Assertions.assertEquals(expected2, actual2);
@@ -59,16 +60,26 @@ class StringSchemaTest {
     }
 
     @Test
-    void testAll() {
+    void testWithDiffChain() {
         Validator v = new Validator();
         StringSchema schema = v.string();
 
-        schema.required();
-        schema.isValid("what does the fox say"); // true
-        schema.isValid("hexlet"); // true
+        schema.contains("what");
 
-        boolean actual2 = schema.isValid(null); // false
+        boolean actual1 = schema.isValid("what does the fox say");
+        boolean expected1 = true;
+        Assertions.assertEquals(expected1, actual1);
+
+        schema.contains("whatthe");
+
+        boolean actual2 = schema.isValid("what does the fox say");
         boolean expected2 = false;
         Assertions.assertEquals(expected2, actual2);
+
+        schema.contains("does");
+
+        boolean actual3 = schema.isValid("what does the fox say");
+        boolean expected3 = false; // because already been false
+        Assertions.assertEquals(expected3, actual3);
     }
 }
