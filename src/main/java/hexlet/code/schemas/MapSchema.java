@@ -6,16 +6,47 @@ import java.util.function.Predicate;
 public class MapSchema extends BaseSchema {
 
     public final MapSchema required() {
-        Predicate<Object> resultPredicate = o -> o instanceof Map<?, ?>;
-        getAppliedMethods().add(resultPredicate);
+        Predicate<Object> resultPredicate = map -> map instanceof Map<?, ?>;
+        addPredicate(resultPredicate);
 
         return this;
     }
 
     public final MapSchema sizeof(int requiredQuantity) {
-        Predicate<Map<?, ?>> resultPredicate = o -> o.size() == requiredQuantity;
-        getAppliedMethods().add(resultPredicate);
+        Predicate<Map<?, ?>> resultPredicate = map -> map.size() == requiredQuantity;
+        addPredicate(resultPredicate);
 
         return this;
+    }
+
+    public final void shape(Map<String, BaseSchema> schemas) {
+        Predicate<Map<String, Object>> resultPredicate = map -> isValidAllValuesOfMap(schemas, map);
+
+        addPredicate(resultPredicate);
+    }
+
+    private boolean isValidAllValuesOfMap(Map<String, BaseSchema> schemas, Map<String, Object> map) {
+        boolean result = false;
+
+        for (Map.Entry<String, BaseSchema> pair: schemas.entrySet()) {
+            String schemasKey = pair.getKey();
+            BaseSchema schemasBaseSchema = pair.getValue();
+
+            if (map.containsKey(schemasKey)) {
+                Object mapKey = schemasKey;
+                Object mapValue = map.get(mapKey);
+
+                result = schemasBaseSchema.isValid(mapValue);
+
+                // If one of result is false, then the others will be false
+                if (!result) {
+                    break;
+                }
+            } else {
+                break; // if one of mapKey missing, then false
+            }
+        }
+
+        return result;
     }
 }
