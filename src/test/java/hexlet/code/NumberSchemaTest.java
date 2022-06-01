@@ -51,6 +51,10 @@ public class NumberSchemaTest {
         boolean actual2 = schema.isValid(negativeNumber);
         boolean expected2 = false;
         Assertions.assertEquals(expected2, actual2);
+
+        boolean actual3 = schema.isValid(null);
+        boolean expected3 = true;
+        Assertions.assertEquals(expected3, actual3);
     }
 
     @Test
