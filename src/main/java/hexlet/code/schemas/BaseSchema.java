@@ -7,8 +7,8 @@ import java.util.function.Predicate;
 public class BaseSchema {
     private final List<Predicate> appliedMethods = new ArrayList<>();
 
-    public final List<Predicate> getAppliedMethods() {
-        return appliedMethods;
+    protected final void addPredicate(Predicate predicate) {
+        appliedMethods.add(predicate);
     }
 
     public final boolean isValid(Object testedObject) {
