@@ -10,6 +10,17 @@ public class NumberSchemaTest {
     private final int positiveNumber = 10;
 
     @Test
+    void testString() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+        schema.positive();
+
+        boolean actual1 = schema.isValid("5");
+        boolean expected1 = false;
+        Assertions.assertEquals(expected1, actual1);
+    }
+
+    @Test
     void testCrudeValid() {
         Validator v = new Validator();
         NumberSchema schema = v.number();

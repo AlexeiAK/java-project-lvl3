@@ -7,10 +7,6 @@ import java.util.function.Predicate;
 public class BaseSchema {
     private final List<Predicate> appliedMethods = new ArrayList<>();
 
-    protected final void addPredicate(Predicate predicate) {
-        appliedMethods.add(predicate);
-    }
-
     public final boolean isValid(Object testedObject) {
         Predicate<Object> finalPredicate = null;
 
@@ -23,6 +19,7 @@ public class BaseSchema {
                 finalPredicate = predicate;
                 boolean resultOfPredicate = finalPredicate.test(testedObject);
 
+                // If one of result is false, then the others will be false
                 if (!resultOfPredicate) {
                     result = false;
                     break;
@@ -31,5 +28,9 @@ public class BaseSchema {
         }
 
         return result;
+    }
+
+    protected final void addPredicate(Predicate predicate) {
+        appliedMethods.add(predicate);
     }
 }
