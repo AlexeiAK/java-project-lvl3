@@ -10,7 +10,6 @@ public class Validator {
     private final BaseSchema numberSchema = new NumberSchema();
     private final BaseSchema mapSchema = new MapSchema();
 
-
     public final StringSchema string() {
         return (StringSchema) stringSchema;
     }

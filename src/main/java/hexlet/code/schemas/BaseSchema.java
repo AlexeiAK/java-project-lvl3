@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class BaseSchema {
-    private final List<Predicate> appliedMethods = new ArrayList<>();
+    private final List<Predicate> checks = new ArrayList<>();
 
     public final boolean isValid(Object testedObject) {
         Predicate<Object> finalPredicate = null;
 
         boolean result = true;
 
-        if (appliedMethods.size() == 0) {
+        if (checks.size() == 0) {
             finalPredicate = o -> o == null || o.equals("");
         } else {
-            for (Predicate predicate : appliedMethods) {
+            for (Predicate predicate : checks) {
                 finalPredicate = predicate;
                 boolean resultOfPredicate = finalPredicate.test(testedObject);
 
@@ -31,6 +31,6 @@ public class BaseSchema {
     }
 
     protected final void addPredicate(Predicate predicate) {
-        appliedMethods.add(predicate);
+        checks.add(predicate);
     }
 }

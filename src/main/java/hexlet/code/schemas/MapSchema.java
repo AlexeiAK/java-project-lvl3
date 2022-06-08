@@ -29,14 +29,13 @@ public class MapSchema extends BaseSchema {
         boolean result = false;
 
         for (Map.Entry<String, BaseSchema> pair: schemas.entrySet()) {
-            String schemasKey = pair.getKey();
+            String fieldCheck = pair.getKey();
             BaseSchema schemasBaseSchema = pair.getValue();
 
-            if (map.containsKey(schemasKey)) {
-                Object mapKey = schemasKey;
-                Object mapValue = map.get(mapKey);
+            if (map.containsKey(fieldCheck)) {
+                Object fieldValue = map.get(fieldCheck);
 
-                result = schemasBaseSchema.isValid(mapValue);
+                result = schemasBaseSchema.isValid(fieldValue);
 
                 // If one of result is false, then the others will be false
                 if (!result) {

@@ -19,7 +19,8 @@ public class NumberSchema extends BaseSchema {
     }
 
     public final NumberSchema range(int min, int max) {
-        Predicate<Integer> resultPredicate = i -> i >= min && i <= max;
+        Predicate<Object> resultPredicate = i ->
+            i instanceof Integer && (Integer) i >= min && (Integer) i <= max;
         addPredicate(resultPredicate);
 
         return this;
