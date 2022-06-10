@@ -7,7 +7,7 @@ public class MapSchema extends BaseSchema {
 
     public final MapSchema required() {
         Predicate<Object> resultPredicate = map -> map instanceof Map<?, ?>;
-        addPredicate(resultPredicate);
+        addCheck(resultPredicate);
 
         return this;
     }
@@ -15,7 +15,7 @@ public class MapSchema extends BaseSchema {
     public final MapSchema sizeof(int requiredQuantity) {
         Predicate<Object> resultPredicate = map ->
             map instanceof Map<?, ?> && ((Map<?, ?>) map).size() == requiredQuantity;
-        addPredicate(resultPredicate);
+        addCheck(resultPredicate);
 
         return this;
     }
@@ -23,7 +23,7 @@ public class MapSchema extends BaseSchema {
     public final void shape(Map<String, BaseSchema> schemas) {
         Predicate<Object> resultPredicate = map -> isValidAllValuesOfMap(schemas, (Map<String, Object>) map);
 
-        addPredicate(resultPredicate);
+        addCheck(resultPredicate);
     }
 
 

@@ -19,7 +19,7 @@ public class BaseSchema {
         return true;
     }
 
-    protected final void addPredicate(Predicate predicate) {
+    protected final void addCheck(Predicate predicate) {
         checks.add(predicate);
     }
 }
