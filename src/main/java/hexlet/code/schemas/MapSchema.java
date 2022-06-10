@@ -13,36 +13,34 @@ public class MapSchema extends BaseSchema {
     }
 
     public final MapSchema sizeof(int requiredQuantity) {
-        Predicate<Map<?, ?>> resultPredicate = map -> map.size() == requiredQuantity;
+        Predicate<Object> resultPredicate = map ->
+            map instanceof Map<?, ?> && ((Map<?, ?>) map).size() == requiredQuantity;
         addPredicate(resultPredicate);
 
         return this;
     }
 
     public final void shape(Map<String, BaseSchema> schemas) {
-        Predicate<Map<String, Object>> resultPredicate = map -> isValidAllValuesOfMap(schemas, map);
+        Predicate<Object> resultPredicate = map -> isValidAllValuesOfMap(schemas, (Map<String, Object>) map);
 
         addPredicate(resultPredicate);
     }
+
 
     private boolean isValidAllValuesOfMap(Map<String, BaseSchema> schemas, Map<String, Object> map) {
         boolean result = false;
 
         for (Map.Entry<String, BaseSchema> pair: schemas.entrySet()) {
-            String fieldCheck = pair.getKey();
-            BaseSchema schemasBaseSchema = pair.getValue();
+            String fieldName = pair.getKey();
+            BaseSchema fieldCheck = pair.getValue();
 
-            if (map.containsKey(fieldCheck)) {
-                Object fieldValue = map.get(fieldCheck);
+            Object fieldValue = map.get(fieldName);
 
-                result = schemasBaseSchema.isValid(fieldValue);
+            result = fieldCheck.isValid(fieldValue);
 
-                // If one of result is false, then the others will be false
-                if (!result) {
-                    break;
-                }
-            } else {
-                break; // if one of mapKey missing, then false
+            // If one of result is false, then the others will be false
+            if (!result) {
+                break;
             }
         }
 
