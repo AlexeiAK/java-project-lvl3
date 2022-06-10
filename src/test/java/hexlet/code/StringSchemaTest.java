@@ -5,7 +5,26 @@ import org.junit.jupiter.api.Test;
 import hexlet.code.schemas.StringSchema;
 
 class StringSchemaTest {
-    private final int minLenthCheck = 3;
+    private final int minLenthCheck = 50;
+
+    @Test
+    void testNoString() {
+        Validator v = new Validator();
+        StringSchema schema = v.string();
+
+        final int noStringForContains = 5;
+        final int noStringForMinLength = 777;
+
+        schema.contains("5");
+        boolean actual1 = schema.isValid(noStringForContains);
+        boolean expected1 = false;
+        Assertions.assertEquals(expected1, actual1);
+
+        schema.minLength(minLenthCheck);
+        boolean actual2 = schema.isValid(noStringForMinLength);
+        boolean expected2 = false;
+        Assertions.assertEquals(expected2, actual2);
+    }
 
     @Test
     void testCrudeValid() {
@@ -55,7 +74,7 @@ class StringSchemaTest {
         StringSchema schema = v.string();
 
         boolean actual1 = schema.minLength(minLenthCheck).isValid("abc");
-        boolean expected1 = true;
+        boolean expected1 = false;
         Assertions.assertEquals(expected1, actual1);
     }
 
