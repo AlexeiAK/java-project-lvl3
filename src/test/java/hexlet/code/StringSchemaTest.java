@@ -50,6 +50,14 @@ class StringSchemaTest {
         boolean actual1 = schema.isValid("what does the fox say");
         boolean expected1 = true;
         Assertions.assertEquals(expected1, actual1);
+
+        boolean actual2 = schema.isValid(null);
+        boolean expected2 = false;
+        Assertions.assertEquals(expected2, actual2);
+
+        boolean actual3 = schema.isValid("");
+        boolean expected3 = false;
+        Assertions.assertEquals(expected3, actual3);
     }
 
     @Test
